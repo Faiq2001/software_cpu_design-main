@@ -1,0 +1,147 @@
+% CMPE 220 — Assignment 1: Software CPU Design (report)
+% Author: Faiq Malik  |  Spring 2026
+%
+% Figures for \includegraphics{...} live in ../figures/ (compile from reports/).
+%
+% Build PDF (from repository root, optional output directory):
+%   pdflatex -interaction=nonstopmode -output-directory=reports reports/Assignment1_Software_CPU_Report.tex
+%   pdflatex -interaction=nonstopmode -output-directory=reports reports/Assignment1_Software_CPU_Report.tex
+%
+% Edit \githuburl below before submitting.
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[doublespacing]{setspace}
+\usepackage{url}
+
+\pagestyle{plain}
+
+\newcommand{\githuburl}{https://github.com/USERNAME/REPONAME}
+
+\begin{document}
+
+% ---------------------------------------------------------------------------
+% Title page
+% ---------------------------------------------------------------------------
+\begin{titlepage}
+    \thispagestyle{empty}
+    \centering
+    \vspace*{1.5in}
+
+    {\LARGE\bfseries CMPE 220 --- System Software}\\[0.35in]
+    {\Large Spring 2026}\\[0.75in]
+
+    {\LARGE\bfseries Assignment 1}\\[0.2in]
+    {\LARGE\bfseries Software CPU Design and Implementation}\\[1.25in]
+
+    {\large\bfseries Team members}\\[0.2in]
+    {\large Faiq Malik}\\[1.5in]
+
+    {\large Date: \today}
+\end{titlepage}
+
+\clearpage
+\setcounter{page}{1}
+
+% ---------------------------------------------------------------------------
+% GitHub repository
+% ---------------------------------------------------------------------------
+\section*{GitHub Repository}
+
+\noindent
+The complete source code, any built artifacts or example binaries included in the repository, demonstration video, and documentation are maintained at:
+
+\vspace{0.5in}
+\begin{center}
+\large\url{\githuburl}
+\end{center}
+
+\vspace{0.35in}
+\noindent
+The repository root contains \texttt{cpu16\_core.cpp} (single-file CPU, assembler, and emulator), demonstration media under \texttt{demos/} (including \texttt{demos/Demo.mp4}), diagrams under \texttt{figures/} when present, any prebuilt program images (for example \texttt{fib.bin}), and this report under \texttt{reports/}.
+
+\clearpage
+
+% ---------------------------------------------------------------------------
+% Download, compile, and run
+% ---------------------------------------------------------------------------
+\section*{Download, Compile, and Run}
+
+\subsection*{Download}
+
+\noindent
+Clone the repository with Git, or download a ZIP archive from the GitHub page above and extract it to a working directory on macOS or Linux.
+
+\subsection*{Requirements}
+
+\begin{itemize}
+  \item C++ compiler with C++17 support (\texttt{g++} recommended).
+  \item Terminal access.
+\end{itemize}
+
+\subsection*{Compile}
+
+\noindent
+From the repository root directory:
+
+\begin{verbatim}
+g++ -std=c++17 -O2 -o cpu16 cpu16_core.cpp
+\end{verbatim}
+
+\noindent
+This produces the executable \texttt{cpu16}, which implements assembler mode (\texttt{asm}), bare-memory emulator mode (\texttt{emu}), and assemble-and-run mode (\texttt{run}).
+
+\subsection*{Run (examples)}
+
+\noindent
+Typical commands when example assembly sources are under \texttt{examples/}:
+
+\begin{verbatim}
+./cpu16 run examples/hello.asm
+./cpu16 run examples/timer.asm
+./cpu16 asm examples/fib.asm -o fib.bin
+./cpu16 emu fib.bin --base 0x0000 --pc 0x0100 --dump 0x0100 0x0140
+\end{verbatim}
+
+\noindent
+The Fibonacci listing uses \texttt{.org 0x0100}; when emulating \texttt{fib.bin}, set the program counter to \texttt{0x0100} as in the command above. If \texttt{fib.bin} lives in the repository root instead of beside the assembly file, use the same arguments with that path, for example:
+
+\begin{verbatim}
+./cpu16 emu fib.bin --base 0x0000 --pc 0x0100 --dump 0x0100 0x0140
+\end{verbatim}
+
+\noindent
+To assemble factorial from source when \texttt{examples/fact.asm} is available, then load and dump memory:
+
+\begin{verbatim}
+./cpu16 asm examples/fact.asm -o fact.bin
+./cpu16 emu fact.bin --base 0x0000 --pc 0x0000 --dump 0x0000 0x01FF
+\end{verbatim}
+
+\subsection*{Video}
+
+\noindent
+The Fibonacci demonstration required for the assignment is included as \texttt{demos/Demo.mp4} in the repository.
+
+\clearpage
+
+% ---------------------------------------------------------------------------
+% Contributions
+% ---------------------------------------------------------------------------
+\section*{Team Member Contributions}
+
+\subsection*{Faiq Malik}
+
+\noindent
+Contributions include:
+
+\begin{itemize}
+  \item \textbf{Architecture and ISA:} 16-bit CPU organization (registers, ALU, control flow, memory map, MMIO), instruction formats and encodings, and flag semantics as implemented in \texttt{cpu16\_core.cpp}.
+  \item \textbf{Emulator:} Fetch--decode--execute, register file, ALU with condition flags, program counter, stack conventions, per-instruction timer step, and UART/timer MMIO behavior.
+  \item \textbf{Assembler:} Two-pass assembly with labels, literals, directives (\texttt{.org}, \texttt{.word}, \texttt{.stringz}), and resolution of forward references.
+  \item \textbf{Example programs:} Hello world, timer, Fibonacci, and factorial (or equivalent) assembly used for demonstration and grading.
+  \item \textbf{Deliverables:} Repository layout, grader-facing build and run documentation (including this report), demonstration video (\texttt{demos/Demo.mp4}), supporting assets as required, and this report submitted as PDF for the course.
+\end{itemize}
+
+\end{document}
