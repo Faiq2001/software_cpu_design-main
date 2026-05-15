@@ -1,7 +1,8 @@
 # CPU16 Software CPU & Program Layout/Execution
 
 **CMPE 220 – System Software (Spring 2026)**  
-**Author:** Faiq Malik
+**Author:** Faiq Malik  
+**Repository:** [https://github.com/Faiq2001/software_cpu_design-main](https://github.com/Faiq2001/software_cpu_design-main)
 
 This repository contains two related assignments:
 
@@ -55,6 +56,13 @@ software_cpu_design-main/
 └── reports/
     ├── Assignment1_Software_CPU_Report.pdf
     └── Assignment2_Program_Layout_Report.pdf
+```
+
+## Clone
+
+```bash
+git clone https://github.com/Faiq2001/software_cpu_design-main.git
+cd software_cpu_design-main
 ```
 
 ---
